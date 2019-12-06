@@ -47,17 +47,17 @@ class CurvatureBaker(bpy.types.Operator):
     bl_options = {"UNDO"}
 
 
-    def generate_curvature():
+    def generate_curvature(self):
         bpy.ops.paint.vertex_paint_toggle()
         bpy.ops.mesh.vertex_color_remove()
         bpy.ops.paint.vertex_color_dirt()
         bpy.ops.paint.vertex_paint_toggle()
 
 
-    def bake():
+    def bake(self):
         # The base object needs a set of vertex colors for this to work
         obj = bpy.context.active_object
-        generate_curvature()
+        self.generate_curvature()
         
         # Try to find an existing Vertex cache and Vertex Color Transfer modifier
         vertex_cache = next((vc for vc in bpy.data.objects if 'VertexCache' in vc.name and vc.parent == obj), None)
@@ -70,7 +70,7 @@ class CurvatureBaker(bpy.types.Operator):
             bpy.ops.object.duplicate()
             vertex_cache = bpy.context.active_object
             bpy.ops.object.convert(target='MESH')  
-            generate_curvature()
+            self.generate_curvature()
             
         # Remove the existing Vertex Cache and redo the process
         else:
@@ -79,7 +79,7 @@ class CurvatureBaker(bpy.types.Operator):
             bpy.ops.object.duplicate()
             vertex_cache = bpy.context.active_object
             bpy.ops.object.convert(target='MESH')  
-            generate_curvature()
+            self.generate_curvature()
                     
             
         # If no modifier could be find create one and set the proper settings
@@ -107,7 +107,7 @@ class CurvatureBaker(bpy.types.Operator):
     
 
     def execute(self, context):  
-        bake()
+        self.bake()
         return {'FINISHED'}
 
 
