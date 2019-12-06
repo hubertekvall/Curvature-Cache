@@ -1,2 +1,2 @@
 # Curvature Cache
- "Simple tool to automatically bake curvature information into the objects vertex colors. Useful for edge masking etc"
+ Simple tool for quickly baking curvature information into the object's vertex colors. Useful for edge masking etc
